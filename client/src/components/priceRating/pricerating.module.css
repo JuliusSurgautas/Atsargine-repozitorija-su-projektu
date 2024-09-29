@@ -1,0 +1,62 @@
+.price_rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+
+  position: relative;
+}
+
+.price {
+  margin: 20px 0;
+
+  font-size: 22px;
+  font-weight: bold;
+  color: #555;
+}
+
+.rating {
+  position: relative;
+
+  font-size: 12px;
+}
+
+.rating_number {
+  position: absolute;
+  top: -15px;
+  right: 0;
+
+  font-size: 12px;
+}
+
+.stars {
+  margin-top: 5px;
+}
+
+.star {
+  margin: 0 5px;
+
+  font-size: 30px;
+
+  cursor: pointer;
+}
+
+.star.active {
+  color: green;
+}
+
+.star.red {
+  color: red;
+}
+
+.star.orange {
+  color: orange;
+}
+
+.star.yellow {
+  color: yellow;
+}
+
+.star.green {
+  color: green;
+}

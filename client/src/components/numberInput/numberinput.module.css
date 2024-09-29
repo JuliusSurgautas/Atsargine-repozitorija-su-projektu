@@ -1,0 +1,71 @@
+.number_input {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0 0.5rem;
+
+  background-color: #212121;
+  border-radius: 10px;
+}
+
+.number_input button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+
+  color: #fff;
+  font-size: 1.5rem;
+
+  position: relative;
+
+  background-color: #212121;
+  border-radius: 10px;
+  border: none;
+
+  cursor: pointer;
+}
+
+.number_input button:before {
+  content: "-";
+
+  font-size: 1.5rem;
+
+  position: absolute;
+}
+
+.number_input .plus:before {
+  content: "+";
+
+  font-size: 1.5rem;
+}
+
+.number_input input {
+  width: 3rem;
+  height: 2rem;
+
+  font-size: 1.2rem;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+
+  outline: none;
+  border: 1px solid #212121;
+  border-radius: 10px;
+  background-color: #212121;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+
+  margin: 0;
+}
