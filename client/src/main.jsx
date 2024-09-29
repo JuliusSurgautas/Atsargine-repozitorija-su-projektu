@@ -7,7 +7,7 @@ import "./style/reset.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter basename="/Kavos-Parduotuve/">
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </StrictMode>
