@@ -1,16 +1,22 @@
 import styles from "./pricerating.module.css";
-import { useState } from "react";
 
-const PriceRating = ({ price, onRatingChange }) => {
-  const [rating, setRating] = useState(0);
+const PriceRating = ({ price, onRatingChange, rating }) => {
+  const getStarClass = (value) => {
+    if (value <= rating) {
+      if (rating === 5) return styles.green;
+      if (rating === 4 || rating === 3) return styles.yellow;
+      if (rating === 2 && value <= 2) return styles.orange;
+      if (rating === 1 && value === 1) return styles.red;
+    }
+    return "";
+  };
 
   const handleRating = (value) => {
     if (value === 1 && rating === 1) {
-      setRating(0);
+      onRatingChange(0);
     } else {
-      setRating(value);
+      onRatingChange(value);
     }
-    onRatingChange(value);
   };
 
   return (
@@ -24,8 +30,7 @@ const PriceRating = ({ price, onRatingChange }) => {
           {[1, 2, 3, 4, 5].map((value) => (
             <span
               key={value}
-              className={`${styles.star}
-                ${value <= rating ? styles.active : ""}`}
+              className={`${styles.star} ${getStarClass(value)}`}
               data-value={value}
               onClick={() => handleRating(value)}
             >

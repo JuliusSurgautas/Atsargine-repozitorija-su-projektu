@@ -25,6 +25,15 @@
   border-bottom: 1px solid #555;
 }
 
+.empty_cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+  color: #000;
+  font-size: 20px;
+}
+
 .cart_info {
   display: flex;
   align-items: center;

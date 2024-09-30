@@ -30,8 +30,12 @@ const ProductDetail = () => {
 
   const handleSubmit = () => {
     if (review.trim() && rating > 0) {
-      const formattedReview = `Rating: ${rating}/5\n${review}`;
-      setReviews([...reviews, formattedReview]);
+      const newReview = {
+        id: product.id,
+        rating: rating,
+        text: review,
+      };
+      setReviews((prevReviews) => [...prevReviews, newReview]);
       setReview("");
       setRating(0);
     } else {
@@ -71,7 +75,11 @@ const ProductDetail = () => {
               <h2 className={styles.product_secondtitle}>
                 {product.secondtitle}
               </h2>
-              <PriceRating price={product.price} onRatingChange={setRating} />
+              <PriceRating
+                price={product.price}
+                rating={rating}
+                onRatingChange={setRating}
+              />
               <NumberInput onChange={setQuantity} />
               <button className={styles.product_btn} onClick={handleAddToCart}>
                 Add To Cart
@@ -95,11 +103,15 @@ const ProductDetail = () => {
                   Submit
                 </button>
                 <div className="reviews">
-                  {reviews.map((r, index) => (
-                    <div key={index} className="review-item">
-                      {r}
-                    </div>
-                  ))}
+                  {reviews
+                    .filter((r) => r.id === product.id)
+                    .map((r, index) => (
+                      <div key={index} className="review-item">
+                        Rating: {r.rating}/5
+                        <br />
+                        {r.text}
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>

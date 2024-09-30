@@ -1,9 +1,18 @@
+import { useState, useEffect } from "react";
 import styles from "./cart.module.css";
-
 import { useCart } from "../cartContext/CartContext";
 
-const Cart = () => {
+function Cart() {
   const { cartItems, removeFromCart, updateItemQuantity } = useCart();
+  const [inputValues, setInputValues] = useState({});
+
+  useEffect(() => {
+    const initialQuantities = {};
+    cartItems.forEach((item) => {
+      initialQuantities[item.id] = item.quantity || 1;
+    });
+    setInputValues(initialQuantities);
+  }, [cartItems]);
 
   const totalWithoutVAT = cartItems.reduce((acc, item) => {
     const price = parseFloat(item.price) || 0;
@@ -14,10 +23,30 @@ const Cart = () => {
   const vat = totalWithoutVAT * 0.21;
   const totalWithVAT = totalWithoutVAT + vat;
 
-  const handleQuantityChange = (item, newQuantity) => {
-    if (newQuantity < 1) return;
-    updateItemQuantity(item.id, newQuantity);
-  };
+  function handleQuantityChange(item, newQuantity) {
+    if (/^\d*$/.test(newQuantity)) {
+      const quantityNumber = Number(newQuantity);
+      if (quantityNumber <= 99) {
+        setInputValues((prevValues) => ({
+          ...prevValues,
+          [item.id]: newQuantity,
+        }));
+      }
+    }
+  }
+
+  function handleBlur(item) {
+    const quantity = inputValues[item.id];
+    if (quantity === "" || Number(quantity) <= 0) {
+      setInputValues((prevValues) => ({
+        ...prevValues,
+        [item.id]: 1,
+      }));
+      updateItemQuantity(item.id, 1);
+    } else {
+      updateItemQuantity(item.id, Number(quantity));
+    }
+  }
 
   return (
     <div className={styles.cart_container}>
@@ -27,14 +56,16 @@ const Cart = () => {
         <span>Tarpinė suma</span>
       </div>
       {cartItems.length === 0 ? (
-        <p>Your cart is empty</p>
+        <div className={styles.empty_cart}>
+          <p>Krepšelis dar tuščias.</p>
+        </div>
       ) : (
         <>
           <ul className={styles.cart_items}>
             {cartItems.map((item) => {
               const price = parseFloat(item.price) || 0;
-              const quantity = item.quantity || 1;
-              const totalPrice = price * quantity;
+              const quantity = inputValues[item.id] || "";
+              const totalPrice = price * (Number(quantity) || 1);
 
               return (
                 <li key={item.id} className={styles.cart_item}>
@@ -61,14 +92,15 @@ const Cart = () => {
                     <div className={styles.cart_item_row}>
                       <div className={styles.cart_quantity}>
                         <input
-                          type="number"
-                          min="1"
-                          max="99"
+                          type="text"
                           value={quantity}
                           onChange={(e) =>
-                            handleQuantityChange(item, Number(e.target.value))
+                            handleQuantityChange(item, e.target.value)
                           }
+                          onBlur={() => handleBlur(item)}
                           style={{ width: "60px", textAlign: "center" }}
+                          min="1"
+                          max="99"
                         />
                       </div>
                       <div className={styles.cart_total_price}>
@@ -103,6 +135,6 @@ const Cart = () => {
       )}
     </div>
   );
-};
+}
 
 export default Cart;

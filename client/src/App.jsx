@@ -1,6 +1,7 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { CartProvider } from "./components/cartContext/CartContext";
 import React, { Suspense } from "react";
+import LoadingSpinner from "./components/loadingSpinner/LoadingSpinner";
 
 const Header = React.lazy(() => import("./components/header/Header"));
 const Footer = React.lazy(() => import("./components/footer/Footer"));
@@ -16,13 +17,10 @@ const Cart = React.lazy(() => import("./components/cart/Cart"));
 const ErrorPage = React.lazy(() => import("./components/errorPage/ErrorPage"));
 
 const App = () => {
-  const location = useLocation();
-  const hideFooter = location.pathname === "/login";
-
   return (
     <div className="app-container">
       <CartProvider>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <Header />
           <ScrollToTop />
           <div className="container">
@@ -34,7 +32,7 @@ const App = () => {
               <Route path="*" element={<ErrorPage />} />
             </Routes>
           </div>
-          {!hideFooter && <Footer />}
+          <Footer />
         </Suspense>
       </CartProvider>
     </div>
