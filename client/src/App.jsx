@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import { CartProvider } from "./components/cartContext/CartContext";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import LoadingSpinner from "./components/loadingSpinner/LoadingSpinner";
+import LogIn from "./components/login/LogIn";
 
 const Header = React.lazy(() => import("./components/header/Header"));
 const Footer = React.lazy(() => import("./components/footer/Footer"));
 const Main = React.lazy(() => import("./components/main/Main"));
-const LogIn = React.lazy(() => import("./components/login/LogIn"));
 const ProductDetail = React.lazy(() =>
   import("./components/products/ProductDetail")
 );
@@ -17,16 +17,18 @@ const Cart = React.lazy(() => import("./components/cart/Cart"));
 const ErrorPage = React.lazy(() => import("./components/errorPage/ErrorPage"));
 
 const App = () => {
+  const [showLogin, setShowLogin] = useState(false);
+
   return (
-    <div className="app-container">
-      <CartProvider>
+    <CartProvider>
+      {showLogin && <LogIn setShowLogin={setShowLogin} />}
+      <div className="app-container">
         <Suspense fallback={<LoadingSpinner />}>
-          <Header />
+          <Header setShowLogin={setShowLogin} />
           <ScrollToTop />
           <div className="container">
             <Routes>
               <Route path="/" element={<Main />} />
-              <Route path="/login" element={<LogIn />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/productdetail/:id" element={<ProductDetail />} />
               <Route path="*" element={<ErrorPage />} />
@@ -34,8 +36,8 @@ const App = () => {
           </div>
           <Footer />
         </Suspense>
-      </CartProvider>
-    </div>
+      </div>
+    </CartProvider>
   );
 };
 

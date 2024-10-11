@@ -1,10 +1,12 @@
 import styles from "./header.module.css";
-
 import logo from "../../images/logo.webp";
 import accountIcon from "../../images/header/account.webp";
 import cartIcon from "../../images/header/cart.webp";
 import shopIcon from "../../images/header/shop.webp";
 import homeIcon from "../../images/header/home.webp";
+import profileIcon from "../../images/profile_icon.png";
+import bagIcon from "../../images/bag_icon.png";
+import logOutIcon from "../../images/logout_icon.png";
 
 import { CiSearch } from "react-icons/ci";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -12,14 +14,20 @@ import { useCart } from "../cartContext/CartContext.jsx";
 import { OurItems } from "../../data/data.js";
 import { useState, useRef, useEffect } from "react";
 
-const Header = () => {
+const Header = ({ setShowLogin }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { cartItems } = useCart();
+  const { cartItems, token, setToken } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken("");
+    navigate("/");
+  };
 
   const totalQuantity = cartItems.reduce(
     (total, item) => total + item.quantity,
@@ -120,15 +128,6 @@ const Header = () => {
             ) : (
               <img src={shopIcon} width={40} height={40} alt="Shop Icon" />
             )}
-
-            <NavLink to="/login">
-              <img
-                src={accountIcon}
-                width={40}
-                height={40}
-                alt="Account Icon"
-              />
-            </NavLink>
             <NavLink to="/cart">
               <div style={{ position: "relative" }}>
                 <img src={cartIcon} width={40} height={40} alt="Cart Icon" />
@@ -137,6 +136,31 @@ const Header = () => {
                 )}
               </div>
             </NavLink>
+            {!token ? (
+              <button onClick={() => setShowLogin(true)}>
+                <img
+                  src={accountIcon}
+                  width={40}
+                  height={40}
+                  alt="Account Icon"
+                />
+              </button>
+            ) : (
+              <div className={styles.header_profile}>
+                <img src={profileIcon} alt="Profile Icon" />
+                <ul className={styles.header_profile_dropdown}>
+                  <li>
+                    <img src={bagIcon} alt="Bag Icon" />
+                    <p>Orders</p>
+                  </li>
+                  <hr />
+                  <li onClick={logout}>
+                    <img src={logOutIcon} alt="LogOut Icon" />
+                    <p>Logout</p>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>

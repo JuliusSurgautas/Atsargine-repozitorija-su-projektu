@@ -5,19 +5,16 @@ import NumberInput from "../numberInput/NumberInput.jsx";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { OurItems } from "../../data/data";
-import { FaIndent } from "react-icons/fa6";
 import { useCart } from "../../components/cartContext/CartContext";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const product = OurItems.find((item) => item.id === parseInt(id));
-
   const [mainImage, setMainImage] = useState(product.image);
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
-
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -30,12 +27,10 @@ const ProductDetail = () => {
 
   const handleSubmit = () => {
     if (review.trim() && rating > 0) {
-      const newReview = {
-        id: product.id,
-        rating: rating,
-        text: review,
-      };
-      setReviews((prevReviews) => [...prevReviews, newReview]);
+      setReviews((prevReviews) => [
+        ...prevReviews,
+        { id: product.id, rating, text: review },
+      ]);
       setReview("");
       setRating(0);
     } else {
@@ -84,9 +79,7 @@ const ProductDetail = () => {
               <button className={styles.product_btn} onClick={handleAddToCart}>
                 Add To Cart
               </button>
-              <p className={styles.product_info}>
-                Aprašymas <FaIndent />
-              </p>
+              <p className={styles.product_info}>Aprašymas</p>
               <ul className={styles.product_list}>
                 {product.list.map((item, index) => (
                   <li key={index}>{item}</li>
