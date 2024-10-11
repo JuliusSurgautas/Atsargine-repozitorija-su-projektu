@@ -30,6 +30,15 @@ body {
   background-color: #ffeacb;
 }
 
+.small-containerEmpty {
+    max-width: 1080px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+  
+    background-color: #ffeacb;
+}
+
 .button {
   padding: 10px 30px;
   margin: 30px 0;
