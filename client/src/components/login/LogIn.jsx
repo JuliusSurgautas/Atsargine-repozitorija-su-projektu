@@ -1,136 +1,116 @@
+import { useEffect, useState } from "react";
+import { useCart } from "../cartContext/CartContext";
 import styles from "./login.module.css";
+import { MdCancel } from "react-icons/md";
+import axios from "axios";
 
-import { useState } from "react";
+const LogIn = ({ setShowLogin }) => {
+  const { url, setToken } = useCart();
+  const [currState, setCurrState] = useState("Login");
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-const LoginSignup = () => {
-  const [is_login, setIsLogin] = useState(true);
-
-  const handleSignupClick = () => {
-    setIsLogin(false);
+  const onChangeHandler = async (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setData((data) => ({ ...data, [name]: value }));
   };
 
-  const handleLoginClick = () => {
-    setIsLogin(true);
-  };
-
-  const handleSignupLinkClick = (e) => {
+  const onLogin = async (e) => {
     e.preventDefault();
-    handleSignupClick();
-  };
-
-  const handleSignupSubmit = (e) => {
-    e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
-    const confirmPassword = e.target[2].value;
-
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+    let newUrl = url;
+    if (currState === "Login") {
+      newUrl += "/api/user/login";
+    } else {
+      newUrl += "/api/user/register";
     }
 
-    console.log("Signup form submitted with", { email, password });
-  };
+    const response = await axios.post(newUrl, data);
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    console.log("Login form submitted");
+    if (response.data.success) {
+      setToken(response.data.token);
+      localStorage.setItem("token", response.data.token);
+      setShowLogin(false);
+    } else {
+      alert(response.data.message);
+    }
   };
+  useEffect(() => {
+    if (setShowLogin) {
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [setShowLogin]);
 
   return (
-    <div className={styles.body}>
-      <div className={styles.login_wrapper}>
-        <div
-          className={styles.login_title_text}
-          style={{ marginLeft: is_login ? "0%" : "-100%" }}
-        >
-          <div className={styles.login_title}>Log in Form</div>
-          <div className={styles.login_title}>Sign up Form</div>
+    <div className={styles.login_popup}>
+      <form className={styles.login_popup_container} onSubmit={onLogin}>
+        <div className={styles.login_popup_title}>
+          <h2>{currState}</h2>
+          <MdCancel
+            onClick={() => {
+              setShowLogin(false);
+              document.body.style.overflow = "auto";
+            }}
+          />
         </div>
-        <div className={styles.login_form_container}>
-          <div className={styles.slide_controls}>
+        <div className={styles.login_popup_inputs}>
+          {currState === "Login" ? (
+            <></>
+          ) : (
             <input
-              type="radio"
-              name="slide"
-              id="login"
-              checked={is_login}
-              onChange={handleLoginClick}
+              name="name"
+              onChange={onChangeHandler}
+              value={data.name}
+              type="text"
+              placeholder="Your Name"
+              required
             />
-            <input
-              type="radio"
-              name="slide"
-              id="signup"
-              checked={!is_login}
-              onChange={handleSignupClick}
-            />
-            <label
-              htmlFor="login"
-              className={`${styles.slide} ${styles.login_button}`}
-              onClick={handleLoginClick}
-            >
-              Log in
-            </label>
-            <label
-              htmlFor="signup"
-              className={`${styles.slide} ${styles.signup_button}`}
-              onClick={handleSignupClick}
-            >
-              Sign up
-            </label>
-            <div
-              className={styles.slider_tab}
-              style={{ left: is_login ? "0%" : "50%" }}
-            ></div>
-          </div>
-          <div
-            className={styles.form_inner}
-            style={{ marginLeft: is_login ? "0%" : "-100%" }}
-          >
-            <form className={styles.login_form} onSubmit={handleLoginSubmit}>
-              <div className={styles.field}>
-                <input type="email" placeholder="Email Address" required />
-              </div>
-              <div className={styles.field}>
-                <input type="password" placeholder="Password" required />
-              </div>
-              <div className={styles.pass_link}>
-                <p>Forgot password?</p>
-              </div>
-              <div className={styles.btn}>
-                <div className={styles.btn_layer}></div>
-                <input type="submit" value="Log in" />
-              </div>
-              <div className={styles.signup_link}>
-                Not a member?{" "}
-                <a href="#" onClick={handleSignupLinkClick}>
-                  Sign up now
-                </a>
-              </div>
-            </form>
-            <form className={styles.signup_form} onSubmit={handleSignupSubmit}>
-              <div className={styles.field}>
-                <input type="email" placeholder="Email Address" required />
-              </div>
-              <div className={styles.field}>
-                <input type="password" placeholder="Password" required />
-              </div>
-              <div className={styles.field}>
-                <input
-                  type="password"
-                  placeholder="Confirm password"
-                  required
-                />
-              </div>
-              <div className={styles.btn}>
-                <div className={styles.btn_layer}></div>
-                <input type="submit" value="Sign up" />
-              </div>
-            </form>
-          </div>
+          )}
+          <input
+            name="email"
+            onChange={onChangeHandler}
+            value={data.email}
+            type="email"
+            placeholder="Your Email"
+            required
+          />
+          <input
+            name="password"
+            onChange={onChangeHandler}
+            value={data.password}
+            type="password"
+            placeholder="Password"
+            required
+          />
         </div>
-      </div>
+        <button type="submit">
+          {currState === "Sign Up" ? "Create account" : "Login"}
+        </button>
+        <div className={styles.login_popup_conditition}>
+          <input type="checkbox" required />
+          <p>By continuing, I agree to the terms of use & privacy policy.</p>
+        </div>
+        {currState === "Login" ? (
+          <p>
+            Create a new account?
+            <span onClick={() => setCurrState("Sign Up")}> Click here</span>
+          </p>
+        ) : (
+          <p>
+            Already have an account?
+            <span onClick={() => setCurrState("Login")}> Login here</span>
+          </p>
+        )}
+      </form>
     </div>
   );
 };
 
-export default LoginSignup;
+export default LogIn;

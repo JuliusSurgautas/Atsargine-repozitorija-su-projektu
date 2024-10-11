@@ -7,6 +7,9 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
+  const url = "http://localhost:3000";
+  const [token, setToken] = useState("");
+
   const [cartItems, setCartItems] = useState(() => {
     const savedItems = localStorage.getItem("cartItems");
     return savedItems ? JSON.parse(savedItems) : [];
@@ -20,7 +23,6 @@ export const CartProvider = ({ children }) => {
           : item
       );
       localStorage.setItem("cartItems", JSON.stringify(updatedItems));
-
       return updatedItems;
     });
   };
@@ -54,9 +56,23 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+    }
+  }, []);
+
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, updateItemQuantity }}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        updateItemQuantity,
+        url,
+        token,
+        setToken,
+      }}
     >
       {children}
     </CartContext.Provider>

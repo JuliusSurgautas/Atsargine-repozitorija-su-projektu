@@ -6,9 +6,41 @@
 }
 
 .header__menu {
-  display: inline-flex;
+  display: flex;
+  align-items: center;
   gap: 10px;
 
+  cursor: pointer;
+}
+
+.header_profile {
+  position: relative;
+}
+
+.header_profile_dropdown {
+  position: absolute;
+  display: none;
+  right: 0;
+  z-index: 1;
+}
+
+.header_profile:hover .header_profile_dropdown {
+  display: flex;
+
+  flex-direction: column;
+  gap: 10px;
+  background-color: #fff2ef;
+  padding: 12px 25px;
+  padding: 12px 25px;
+  border-radius: 4px;
+  border: 1px solid tomato;
+  outline: 2px solid white;
+}
+
+.header_profile_dropdown li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   cursor: pointer;
 }
 
@@ -28,7 +60,7 @@
 }
 
 .search input {
-  width: 100%;
+  width: 350px;
   padding: 10px 10px 10px 40px;
 
   color: #fff;

@@ -55,6 +55,7 @@
 }
 
 .cart_item_details {
+  width: 490px;
   display: flex;
   flex-direction: column;
 }
@@ -82,6 +83,7 @@ input {
 
 .remove_item {
   color: red;
+  text-align: left;
 
   border: none;
   background: transparent;
@@ -110,8 +112,8 @@ input {
 
 .cart_info {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .cart_summary {
