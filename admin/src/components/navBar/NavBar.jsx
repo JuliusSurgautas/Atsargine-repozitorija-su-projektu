@@ -6,8 +6,8 @@ const NavBar = () => {
       <img
         className="logo"
         src={assets.logo}
-        width={250}
-        height={105}
+        width={100}
+        height={100}
         alt="Logo"
       />
       <img className="profile" src={assets.profile_image} alt="Profile Image" />

@@ -21,6 +21,8 @@
 
 .add_product_name input,
 .add_product_description textarea {
+  margin: 10px 0;
+  border: 1px solid #ccc;
   padding: 10px;
   resize: none;
 }

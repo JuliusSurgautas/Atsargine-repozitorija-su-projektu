@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useCart } from "../cartContext/CartContext";
 import styles from "./login.module.css";
-import { MdCancel } from "react-icons/md";
+import logo from "../../images/logo.webp";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 
 const LogIn = ({ setShowLogin }) => {
@@ -12,8 +14,11 @@ const LogIn = ({ setShowLogin }) => {
     email: "",
     password: "",
   });
+  const [isVisible, setIsVisible] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const popupRef = useRef(null);
 
-  const onChangeHandler = async (e) => {
+  const onChangeHandler = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setData((data) => ({ ...data, [name]: value }));
@@ -33,43 +38,67 @@ const LogIn = ({ setShowLogin }) => {
     if (response.data.success) {
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
-      setShowLogin(false);
+      closePopup();
     } else {
       alert(response.data.message);
     }
   };
-  useEffect(() => {
-    if (setShowLogin) {
-      document.body.style.overflow = "hidden";
+
+  const handleOutsideClick = (e) => {
+    if (popupRef.current && !popupRef.current.contains(e.target)) {
+      closePopup();
     }
+  };
+
+  const closePopup = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      setShowLogin(false);
+      document.body.style.overflow = "auto";
+    }, 300);
+  };
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.addEventListener("mousedown", handleOutsideClick);
+    setTimeout(() => setIsVisible(true), 10);
 
     return () => {
       document.body.style.overflow = "auto";
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [setShowLogin]);
+  }, []);
 
   return (
-    <div className={styles.login_popup}>
-      <form className={styles.login_popup_container} onSubmit={onLogin}>
+    <div
+      className={`${styles.login_popup} ${
+        isVisible ? styles.visible : styles.hidden
+      }`}
+    >
+      <form
+        ref={popupRef}
+        className={styles.login_popup_container}
+        onSubmit={onLogin}
+      >
         <div className={styles.login_popup_title}>
-          <h2>{currState}</h2>
-          <MdCancel
-            onClick={() => {
-              setShowLogin(false);
-              document.body.style.overflow = "auto";
-            }}
-          />
+          <div className={styles.title_container}>
+            <img
+              src={logo}
+              style={{ width: 70, height: 70 }}
+              alt="Footer Logo"
+            />
+            <h2>{currState}</h2>
+          </div>
+          <RxCross2 color="#fff" onClick={closePopup} />
         </div>
         <div className={styles.login_popup_inputs}>
-          {currState === "Login" ? (
-            <></>
-          ) : (
+          {currState === "Sign Up" && (
             <input
               name="name"
               onChange={onChangeHandler}
               value={data.name}
               type="text"
-              placeholder="Your Name"
+              placeholder="Vartotojo vardas"
               required
             />
           )}
@@ -78,34 +107,42 @@ const LogIn = ({ setShowLogin }) => {
             onChange={onChangeHandler}
             value={data.email}
             type="email"
-            placeholder="Your Email"
+            placeholder="El. pašto adresas"
             required
           />
-          <input
-            name="password"
-            onChange={onChangeHandler}
-            value={data.password}
-            type="password"
-            placeholder="Password"
-            required
-          />
+          <div className={styles.password_container}>
+            <input
+              name="password"
+              onChange={onChangeHandler}
+              value={data.password}
+              type={showPassword ? "text" : "password"}
+              placeholder="Slaptažodis"
+              required
+            />
+            <span
+              className={styles.password_toggle_icon}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+            </span>
+          </div>
         </div>
         <button type="submit">
-          {currState === "Sign Up" ? "Create account" : "Login"}
+          {currState === "Sign Up" ? "Sign Up" : "Prisijungti"}
         </button>
         <div className={styles.login_popup_conditition}>
           <input type="checkbox" required />
-          <p>By continuing, I agree to the terms of use & privacy policy.</p>
+          <p>Tęsdamas sutinku su naudojimo sąlygomis ir privatumo politika.</p>
         </div>
         {currState === "Login" ? (
           <p>
-            Create a new account?
-            <span onClick={() => setCurrState("Sign Up")}> Click here</span>
+            Don't have an account?
+            <span onClick={() => setCurrState("Sign Up")}>Užsiregistruoti</span>
           </p>
         ) : (
           <p>
-            Already have an account?
-            <span onClick={() => setCurrState("Login")}> Login here</span>
+            Have an account?
+            <span onClick={() => setCurrState("Login")}>Prisijungti</span>
           </p>
         )}
       </form>

@@ -1,3 +1,7 @@
+.intro {
+  background-image: url(../../images/coffee_image.jpg);
+}
+
 .intro h1 {
   margin: 25px 0;
 

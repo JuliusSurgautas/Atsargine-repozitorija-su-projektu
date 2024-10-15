@@ -46,78 +46,105 @@ import itemImage31 from "../images/items/beata1.webp";
 import itemImage32 from "../images/items/beata4.webp";
 import itemImage33 from "../images/items/beata5.webp";
 
-import item9 from "../images/items/BlackCrow.webp"
-import itemImage34 from "../images/items/BlackCrow2.webp"
-import itemImage35 from "../images/items/Blackcrow3.webp"
-import itemImage36 from "../images/items/BlackCrow4.webp"
-import itemImage37 from "../images/items/BlackCrow5.webp"
+import item9 from "../images/items/BlackCrow.webp";
+import itemImage34 from "../images/items/BlackCrow2.webp";
+import itemImage35 from "../images/items/Blackcrow3.webp";
+import itemImage36 from "../images/items/BlackCrow4.webp";
+import itemImage37 from "../images/items/BlackCrow5.webp";
 
-import item10 from "../images/items/Royale.webp"
-import itemImage38 from "../images/items/Royale2.webp"
-import itemImage39 from "../images/items/Royale3.webp"
-import itemImage40 from "../images/items/Royale4.webp"
-import itemImage41 from "../images/items/Royale5.webp"
+import item10 from "../images/items/Royale.webp";
+import itemImage38 from "../images/items/Royale2.webp";
+import itemImage39 from "../images/items/Royale3.webp";
+import itemImage40 from "../images/items/Royale4.webp";
+import itemImage41 from "../images/items/Royale5.webp";
 
+import item11 from "../images/items/Intenso.webp";
+import itemImage42 from "../images/items/Intenso2.webp";
+import itemImage43 from "../images/items/Intenso3.webp";
+import itemImage44 from "../images/items/Intenso4.webp";
+import itemImage45 from "../images/items/Intenso5.webp";
 
-import item11 from "../images/items/Intenso.webp"
-import itemImage42 from "../images/items/Intenso2.webp"
-import itemImage43 from "../images/items/Intenso3.webp"
-import itemImage44 from "../images/items/Intenso4.webp"
-import itemImage45 from "../images/items/Intenso5.webp"
+import item12 from "../images/items/Dolce.webp";
+import itemImage46 from "../images/items/dolce2.webp";
+import itemImage47 from "../images/items/dolce3.webp";
+import itemImage48 from "../images/items/dolce4.webp";
+import itemImage49 from "../images/items/dolce5.webp";
 
-import item12 from "../images/items/Dolce.webp"
-import itemImage46 from "../images/items/dolce2.webp"
-import itemImage47 from "../images/items/dolce3.webp"
-import itemImage48 from "../images/items/dolce4.webp"
-import itemImage49 from "../images/items/dolce5.webp"
+import item13 from "../images/items/Parralel17Gift.webp";
+import itemImage50 from "../images/items/Parallel17Gift2.webp";
+import itemImage51 from "../images/items/Parallel17Gift3.webp";
+import itemImage52 from "../images/items/Parallel17Gift4.webp";
+import itemImage53 from "../images/items/Parallel17Gift5.webp";
 
-import item13 from "../images/items/Parralel17Gift.webp"
-import itemImage50 from "../images/items/Parallel17Gift2.webp"
-import itemImage51 from "../images/items/Parallel17Gift3.webp"
-import itemImage52 from "../images/items/Parallel17Gift4.webp"
-import itemImage53 from "../images/items/Parallel17Gift5.webp"
+import item14 from "../images/items/Amicosso.webp";
+import itemImage54 from "../images/items/Amicosso2.webp";
+import itemImage55 from "../images/items/Amicosso3.webp";
+import itemImage56 from "../images/items/amicosso4.webp";
+import itemImage57 from "../images/items/amicosso5.webp";
 
-import item14 from "../images/items/Amicosso.webp"
-import itemImage54 from "../images/items/Amicosso2.webp"
-import itemImage55 from "../images/items/Amicosso3.webp"
-import itemImage56 from "../images/items/amicosso4.webp"
-import itemImage57 from "../images/items/amicosso5.webp"
+import item15 from "../images/items/christmas.webp";
+import itemImage58 from "../images/items/christmas2.webp";
+import itemImage59 from "../images/items/christmas3.webp";
+import itemImage60 from "../images/items/christmas4.webp";
+import itemImage61 from "../images/items/christmas5.webp";
 
-import item15 from "../images/items/christmas.webp"
-import itemImage58 from "../images/items/christmas2.webp"
-import itemImage59 from "../images/items/christmas3.webp"
-import itemImage60 from "../images/items/christmas4.webp"
-import itemImage61 from "../images/items/christmas5.webp"
+import item16 from "../images/items/Lullaby.webp";
+import itemImage62 from "../images/items/lullaby2.webp";
+import itemImage63 from "../images/items/lullaby4.webp";
+import itemImage64 from "../images/items/Lullaby5.webp";
+import itemImage65 from "../images/items/Lullaby.webp";
 
-import item16 from "../images/items/Lullaby.webp"
-import itemImage62 from "../images/items/lullaby2.webp"
-import itemImage63 from "../images/items/lullaby4.webp"
-import itemImage64 from "../images/items/Lullaby5.webp"
-import itemImage65 from "../images/items/Lullaby.webp"
+import item17 from "../images/items/Parallel12Gift.webp";
+import itemImage66 from "../images/items/parallel12gift2.webp";
+import itemImage67 from "../images/items/parallel12Gift3.webp";
+import itemImage68 from "../images/items/parallel12Gift4.webp";
+import itemImage69 from "../images/items/parallel12Gift5.webp";
 
-import item17 from "../images/items/Parallel12Gift.webp"
-import itemImage66 from "../images/items/parallel12gift2.webp"
-import itemImage67 from "../images/items/parallel12Gift3.webp"
-import itemImage68 from "../images/items/parallel12Gift4.webp"
-import itemImage69 from "../images/items/parallel12Gift5.webp"
+import item18 from "../images/items/DolceGusto.webp";
+import itemImage70 from "../images/items/DolceGusto2.webp";
+import itemImage71 from "../images/items/DolceGusto3.webp";
+import itemImage72 from "../images/items/DolceGusto4.webp";
+import itemImage73 from "../images/items/DolceGusto5.webp";
 
-import item18 from "../images/items/DolceGusto.webp"
-import itemImage70 from "../images/items/DolceGusto2.webp"
-import itemImage71 from "../images/items/DolceGusto3.webp"
-import itemImage72 from "../images/items/DolceGusto4.webp"
-import itemImage73 from "../images/items/DolceGusto5.webp"
+import item19 from "../images/items/Chiato.webp";
+import itemImage74 from "../images/items/Chiato2.webp";
+import itemImage75 from "../images/items/Chiato3.webp";
+import itemImage76 from "../images/items/Chiato4.webp";
+import itemImage77 from "../images/items/chiato5.webp";
 
-import item19 from "../images/items/Chiato.webp"
-import itemImage74 from "../images/items/Chiato2.webp"
-import itemImage75 from "../images/items/Chiato3.webp"
-import itemImage76 from "../images/items/Chiato4.webp"
-import itemImage77 from "../images/items/chiato5.webp"
+import item20 from "../images/items/Amaretto.webp";
+import itemImage78 from "../images/items/amaretto2.webp";
+import itemImage79 from "../images/items/amaretto3.webp";
+import itemImage80 from "../images/items/Amaretto4.webp";
+import itemImage81 from "../images/items/amaretto5.webp";
 
-import item20 from "../images/items/Amaretto.webp"
-import itemImage78 from "../images/items/amaretto2.webp"
-import itemImage79 from "../images/items/amaretto3.webp"
-import itemImage80 from "../images/items/Amaretto4.webp"
-import itemImage81 from "../images/items/amaretto5.webp"
+export const headerLinksData = [
+  {
+    id: 1,
+    title: "Kava",
+    to: "/kava",
+  },
+  {
+    id: 2,
+    title: "Kavos Aparatai",
+    to: "/aparatai",
+  },
+  {
+    id: 3,
+    title: "Kavamalės",
+    to: "/kavamales",
+  },
+  {
+    id: 4,
+    title: "Kavinukai",
+    to: "/kavinukai",
+  },
+  {
+    id: 5,
+    title: "Arbata",
+    to: "/arbata",
+  },
+];
 
 export const OurItems = [
   {
@@ -284,7 +311,8 @@ export const OurItems = [
     image: item9,
     toptitle: "Malta Kava / Black Crow White Pigeon",
     secondtitle: "Black Crow White Pigeon Ethiopia Burtukaana, 1 kg",
-    title: "Rūšinės kavos pupelės Black Crow White Pigeon Ethiopia Burtukaana, 1 kg",
+    title:
+      "Rūšinės kavos pupelės Black Crow White Pigeon Ethiopia Burtukaana, 1 kg",
     list: [
       "Visur pakvimpa miško mėlynėmis, skleidžiasi rabarbarų ir saldžios vanilės natos ",
       "Sklandant kelių tūkstančių metrų aukštyje, virš Etiopijos Guji regiono, žvilgsnis stabteli už sraunios Turo upės ir šalia įsikūrusios kavos apdorojimo stoties „Anasora“ ",

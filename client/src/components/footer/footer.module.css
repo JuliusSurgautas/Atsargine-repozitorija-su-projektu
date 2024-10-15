@@ -1,11 +1,52 @@
-footer {
-  width: 100%;
-  padding-top: 5px;
-  height: 200px;
+.footer {
+  background-color: #000;
 
-  color: #555;
+  color: #fff;
+}
+
+.footer_inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer_content {
   text-align: center;
+}
 
-  border-top: 2px solid #808080;
-  background-color: white;
+.social_icons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.social_icon {
+  margin: 0 10px;
+  font-size: 24px;
+  transition: transform 0.3s;
+}
+
+.subscription_email {
+  background-color: transparent;
+  border: 2px solid #fff;
+  margin: 10px 0;
+  padding: 8px;
+  height: 40px;
+  flex: 1;
+}
+
+.button {
+  padding: 0 16px;
+  height: 40px;
+  background-color: #4b3c2a;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.copyright {
+  max-width: 150px;
+  text-align: center;
+  line-height: 1.5;
 }

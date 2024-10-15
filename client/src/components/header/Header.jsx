@@ -1,27 +1,25 @@
 import styles from "./header.module.css";
 import logo from "../../images/logo.webp";
-import accountIcon from "../../images/header/account.webp";
+import userIcon from "../../images/header/user.webp";
 import cartIcon from "../../images/header/cart.webp";
-import shopIcon from "../../images/header/shop.webp";
-import homeIcon from "../../images/header/home.webp";
-import profileIcon from "../../images/profile_icon.png";
-import bagIcon from "../../images/bag_icon.png";
-import logOutIcon from "../../images/logout_icon.png";
+import profileIcon from "../../images/header/profile_icon.webp";
 
 import { CiSearch } from "react-icons/ci";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useCart } from "../cartContext/CartContext.jsx";
-import { OurItems } from "../../data/data.js";
+import { headerLinksData, OurItems } from "../../data/data.js";
 import { useState, useRef, useEffect } from "react";
 
 const Header = ({ setShowLogin }) => {
-  const location = useLocation();
+  const [active, setActive] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { cartItems, token, setToken } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const profileMenuRef = useRef(null);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -76,19 +74,43 @@ const Header = ({ setShowLogin }) => {
     setIsDropdownOpen(false);
   };
 
+  const handleProfileClick = () => {
+    setIsProfileMenuOpen((prev) => !prev);
+  };
+
+  const handleClickOutside = (e) => {
+    if (profileMenuRef.current && !profileMenuRef.current.contains(e.target)) {
+      setIsProfileMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <header className={styles.header}>
       <div className="container">
         <div className={styles.header__inner}>
+          <ul className={active ? styles.activeList : ""}>
+            {headerLinksData.map((link) => (
+              <li key={link.id}>
+                <NavLink to={link.to}>{link.title}</NavLink>
+              </li>
+            ))}
+          </ul>
           <NavLink to="/">
-            <img src={logo} alt="Logo" style={{ width: 250, height: 105 }} />
+            <img src={logo} alt="Logo" style={{ width: 90, height: 90 }} />
           </NavLink>
 
           <div className={styles.search} ref={dropdownRef}>
             <CiSearch className={styles.search_icon} />
             <input
               type="search"
-              placeholder="Search"
+              placeholder="Paieška"
               value={searchQuery}
               onChange={handleSearchChange}
               onKeyDown={handleKeyDown}
@@ -121,44 +143,53 @@ const Header = ({ setShowLogin }) => {
           </div>
 
           <div className={styles.header__menu}>
-            {location.pathname !== "/" ? (
-              <NavLink to="/">
-                <img src={homeIcon} width={40} height={40} alt="Home Icon" />
-              </NavLink>
-            ) : (
-              <img src={shopIcon} width={40} height={40} alt="Shop Icon" />
-            )}
             <NavLink to="/cart">
               <div style={{ position: "relative" }}>
-                <img src={cartIcon} width={40} height={40} alt="Cart Icon" />
+                <img src={cartIcon} width={35} height={35} alt="Cart Icon" />
                 {totalQuantity > 0 && (
                   <span className={styles.cart_badge}>{totalQuantity}</span>
                 )}
               </div>
             </NavLink>
             {!token ? (
-              <button onClick={() => setShowLogin(true)}>
-                <img
-                  src={accountIcon}
-                  width={40}
-                  height={40}
-                  alt="Account Icon"
-                />
+              <button
+                className={styles.cart_login_button}
+                onClick={() => setShowLogin(true)}
+              >
+                <img src={userIcon} width={35} height={35} alt="Account Icon" />
+                <span>Profilis</span>
               </button>
             ) : (
               <div className={styles.header_profile}>
-                <img src={profileIcon} alt="Profile Icon" />
-                <ul className={styles.header_profile_dropdown}>
-                  <li>
-                    <img src={bagIcon} alt="Bag Icon" />
-                    <p>Orders</p>
-                  </li>
-                  <hr />
-                  <li onClick={logout}>
-                    <img src={logOutIcon} alt="LogOut Icon" />
-                    <p>Logout</p>
-                  </li>
-                </ul>
+                <img
+                  src={profileIcon}
+                  width={35}
+                  height={35}
+                  alt="Profile Icon"
+                  onClick={handleProfileClick}
+                />
+                {isProfileMenuOpen && (
+                  <ul
+                    className={styles.header_profile_dropdown}
+                    ref={profileMenuRef}
+                  >
+                    <li>
+                      <p>Užsakymai</p>
+                    </li>
+                    <li>
+                      <p>Adresai</p>
+                    </li>
+                    <li>
+                      <p>Paskyros Duomenys</p>
+                    </li>
+                    <li>
+                      <p>Slaptažodis</p>
+                    </li>
+                    <li onClick={logout} className={styles.logout}>
+                      <p>Atsijungti</p>
+                    </li>
+                  </ul>
+                )}
               </div>
             )}
           </div>
