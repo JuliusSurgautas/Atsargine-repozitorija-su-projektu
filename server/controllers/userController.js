@@ -3,6 +3,10 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
 
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+};
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -23,10 +27,6 @@ const loginUser = async (req, res) => {
     console.log(error);
     return res.json({ success: false, message: "Error" });
   }
-};
-
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
 };
 
 const registerUser = async (req, res) => {

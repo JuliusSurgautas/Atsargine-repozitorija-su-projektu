@@ -21,10 +21,11 @@ const Checkout = React.lazy(() => import("./components/checkout/Checkout"));
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
+  const [token, setToken] = useState(null);
 
   return (
     <CartProvider>
-      {showLogin && <LogIn setShowLogin={setShowLogin} />}
+      {showLogin && <LogIn setShowLogin={setShowLogin} setToken={setToken} />}
       <div className="app-container">
         <Suspense fallback={<LoadingSpinner />}>
           <Header setShowLogin={setShowLogin} />

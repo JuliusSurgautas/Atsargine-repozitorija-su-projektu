@@ -100,6 +100,31 @@
   cursor: pointer;
 }
 
+.google_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.google_button:hover {
+  background-color: #357ae8;
+}
+
+.google_button img {
+  width: 20px;
+  margin-right: 10px;
+}
+
 .password_container {
   position: relative;
 }

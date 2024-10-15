@@ -5,6 +5,7 @@ import logo from "../../images/logo.webp";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
+import { GoogleLogin } from "@react-oauth/google";
 
 const LogIn = ({ setShowLogin }) => {
   const { url, setToken } = useCart();
@@ -41,6 +42,25 @@ const LogIn = ({ setShowLogin }) => {
       closePopup();
     } else {
       alert(response.data.message);
+    }
+  };
+
+  const handleGoogleLogin = async (response) => {
+    const token = response.credential;
+
+    try {
+      const res = await axios.post(`${url}/api/auth/google`, { token });
+
+      if (res.data.success) {
+        setToken(res.data.token);
+        localStorage.setItem("token", res.data.token);
+        closePopup();
+      } else {
+        alert(res.data.message);
+      }
+    } catch (error) {
+      console.error("Error logging in with Google:", error);
+      alert("Google authentication failed.");
     }
   };
 
@@ -98,7 +118,7 @@ const LogIn = ({ setShowLogin }) => {
               onChange={onChangeHandler}
               value={data.name}
               type="text"
-              placeholder="Vartotojo vardas"
+              placeholder="Username"
               required
             />
           )}
@@ -107,7 +127,7 @@ const LogIn = ({ setShowLogin }) => {
             onChange={onChangeHandler}
             value={data.email}
             type="email"
-            placeholder="El. pašto adresas"
+            placeholder="Email Address"
             required
           />
           <div className={styles.password_container}>
@@ -116,7 +136,7 @@ const LogIn = ({ setShowLogin }) => {
               onChange={onChangeHandler}
               value={data.password}
               type={showPassword ? "text" : "password"}
-              placeholder="Slaptažodis"
+              placeholder="Password"
               required
             />
             <span
@@ -128,21 +148,30 @@ const LogIn = ({ setShowLogin }) => {
           </div>
         </div>
         <button type="submit">
-          {currState === "Sign Up" ? "Sign Up" : "Prisijungti"}
+          {currState === "Sign Up" ? "Sign Up" : "Log In"}
         </button>
+
+        <div className={styles.google_login_container}>
+          <GoogleLogin
+            onSuccess={handleGoogleLogin}
+            onError={() => console.log("Login Failed")}
+            logoSrc="https://upload.wikimedia.org/wikipedia/commons/4/4b/Google_logo.svg" // Optional, if you want to customize the logo
+          />
+        </div>
+
         <div className={styles.login_popup_conditition}>
           <input type="checkbox" required />
-          <p>Tęsdamas sutinku su naudojimo sąlygomis ir privatumo politika.</p>
+          <p>I agree to the terms of service and privacy policy.</p>
         </div>
         {currState === "Login" ? (
           <p>
             Don't have an account?
-            <span onClick={() => setCurrState("Sign Up")}>Užsiregistruoti</span>
+            <span onClick={() => setCurrState("Sign Up")}>Sign Up</span>
           </p>
         ) : (
           <p>
             Have an account?
-            <span onClick={() => setCurrState("Login")}>Prisijungti</span>
+            <span onClick={() => setCurrState("Login")}>Log In</span>
           </p>
         )}
       </form>
