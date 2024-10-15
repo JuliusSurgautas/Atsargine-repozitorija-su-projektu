@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./cart.module.css";
 import { useCart } from "../cartContext/CartContext";
 import CartItem from "./CartItem";
+import { useNavigate } from "react-router-dom";
 import {
   calculateTotalWithoutVAT,
   calculateVAT,
@@ -11,6 +12,7 @@ import {
 function Cart() {
   const { cartItems, removeFromCart, updateItemQuantity } = useCart();
   const [inputValues, setInputValues] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const initialQuantities = Object.fromEntries(
@@ -36,6 +38,10 @@ function Cart() {
       newQuantity === "" ? 1 : Math.max(1, Math.min(99, Number(newQuantity)));
     setInputValues((prev) => ({ ...prev, [id]: quantity }));
     updateItemQuantity(id, quantity);
+  };
+
+  const handleBuyClick = () => {
+    navigate("/checkout");
   };
 
   return (
@@ -86,7 +92,9 @@ function Cart() {
                 €{calculateTotalWithVAT(totalWithoutVAT).toFixed(2)}
               </span>
             </div>
-            <button className={styles.summary_btn}>Pirkti</button>
+            <button className={styles.summary_btn} onClick={handleBuyClick}>
+              Pirkti
+            </button>
           </div>
         </>
       )}

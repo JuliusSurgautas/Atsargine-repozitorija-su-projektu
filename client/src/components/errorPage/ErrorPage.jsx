@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 const ErrorPage = () => {
   return (
     <div className={styles.error}>
-      <h1 className={styles.error_code}>404 - Page not found</h1>
+      <h1 className={styles.error_code}>404 – puslapis nerastas</h1>
       <p className={styles.error_message}>
-        This page you are looking for might have been removed had its name
-        changed or is temporarily unavailable.
+        Šis puslapis, kurio ieškote, galėjo būti pašalintas su pavadinimu
+        pasikeitė arba laikinai nepasiekiamas.
       </p>
       <Link to="/" className="button">
-        Back to Home
+        Grįžti į pagrindinį puslapį
       </Link>
     </div>
   );

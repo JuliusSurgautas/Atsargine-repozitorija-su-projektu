@@ -3,9 +3,11 @@
 body {
   font-family: "Poppins", sans-serif;
 
-  background-color: #ffeacb;
-
   height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .app-container {
@@ -17,26 +19,15 @@ body {
 .container {
   flex: 1;
   width: 100%;
-  max-width: 1300px;
+  max-width: 1700px;
   margin: auto;
 }
 
 .small-container {
-  max-width: 1080px;
+  max-width: 1300px;
   margin: auto;
   padding-left: 25px;
   padding-right: 25px;
-
-  background-color: #ffeacb;
-}
-
-.small-containerEmpty {
-    max-width: 1080px;
-    margin: auto;
-    padding-left: 25px;
-    padding-right: 25px;
-  
-    background-color: #ffeacb;
 }
 
 .button {
@@ -47,7 +38,7 @@ body {
   color: #fff;
 
   border-radius: 5px;
-  background-color: #4e4241;
+  background-color: #4b3c2a;
   border: none;
 
   cursor: pointer;
