@@ -155,7 +155,7 @@ const LogIn = ({ setShowLogin }) => {
           <GoogleLogin
             onSuccess={handleGoogleLogin}
             onError={() => console.log("Login Failed")}
-            logoSrc="https://upload.wikimedia.org/wikipedia/commons/4/4b/Google_logo.svg" // Optional, if you want to customize the logo
+            logoSrc="https://upload.wikimedia.org/wikipedia/commons/4/4b/Google_logo.svg"
           />
         </div>
 

@@ -15,7 +15,7 @@ const SideBar = () => {
           }
         >
           <img src={assets.add_icon} alt="" />
-          <p>Add Items</p>
+          <p>Pridėti elementus</p>
         </NavLink>
         <NavLink
           to="/list"
@@ -26,7 +26,7 @@ const SideBar = () => {
           }
         >
           <img src={assets.order_icon} alt="" />
-          <p>List Items</p>
+          <p>Elementų sąrašas</p>
         </NavLink>
         <NavLink
           to="/orders"
@@ -37,7 +37,7 @@ const SideBar = () => {
           }
         >
           <img src={assets.order_icon} alt="" />
-          <p>Orders</p>
+          <p>Užsakymai</p>
         </NavLink>
       </div>
     </nav>

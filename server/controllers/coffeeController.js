@@ -1,23 +1,53 @@
-import coffeeModel from "../models/coffeeModel.js";
+import CoffeeModel from "../models/coffeeModel.js";
 
-const addCoffee = async (req, res) => {
-  let imageFilename = req.file.filename;
-
-  const coffee = new coffeeModel({
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    category: req.body.category,
-    image: imageFilename,
-  });
-
+export const addCoffee = async (req, res) => {
   try {
-    await coffee.save();
-    res.json({ success: true, message: "Coffee Added" });
+    const { name, description, price } = req.body;
+    const image = req.file.filename;
+
+    const newCoffee = new CoffeeModel({
+      name,
+      description,
+      price,
+      image,
+    });
+
+    await newCoffee.save();
+
+    res
+      .status(201)
+      .json({ success: true, message: "Kava Pridėta", data: newCoffee });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Error" });
+    console.error("Error adding coffee:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Kilo klaida pridedant kavą" });
   }
 };
 
-export { addCoffee };
+export const removeCoffee = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const result = await CoffeeModel.findByIdAndDelete(id);
+    if (result) {
+      res
+        .status(200)
+        .json({ success: true, message: "Kava sėkmingai pašalinta" });
+    } else {
+      res.status(404).json({ success: false, message: "Kava nerasta" });
+    }
+  } catch (error) {
+    console.error("Error removing coffee:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const getCoffeeList = async (req, res) => {
+  try {
+    const coffees = await CoffeeModel.find();
+    res.status(200).json({ success: true, data: coffees });
+  } catch (error) {
+    console.error("Error fetching coffee list:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

@@ -9,13 +9,12 @@ import "dotenv/config.js";
 const app = express();
 const PORT = 3000;
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: ["http://localhost:5173", "http://localhost:5174"],
+  credentials: true,
+};
 
+app.use(cors(corsOptions));
 app.use(express.json());
 
 connectDB();
